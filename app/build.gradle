@@ -20,7 +20,19 @@ model {
         }
         ndk {
             moduleName = 'rgb2yuv'
-            toolchain "clang"
+            toolchain 'clang'
+//            cppFlags.add('-O2')
+            cppFlags.add('-I' + file('src/main/jni/').absolutePath)
+            ldFlags.add('-L' + file('src/main/jniLibs/armeabi-v7a').absolutePath)
+            ldFlags.add('-L' + file('src/main/jniLibs/arm64-v8a').absolutePath)
+            ldLibs.add('yuv')
+        }
+        productFlavors {
+            create('arm') {
+                ndk {
+                    abiFilters.addAll(['armeabi-v7a', 'arm64-v8a'])
+                }
+            }
         }
     }
 }

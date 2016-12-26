@@ -41,7 +41,7 @@ public class ConverterExecutor {
         private final String mName;
         private final Map<Size, List<Long>> mTimes;
         private List<Long> mCurrentTimes;
-        private long mStartMillis;
+        private long mStartNanos;
 
         Results(String name) {
             mName = name;
@@ -54,11 +54,11 @@ public class ConverterExecutor {
         }
 
         void onStart() {
-            mStartMillis = System.currentTimeMillis();
+            mStartNanos = System.nanoTime();
         }
 
         void onStop() {
-            mCurrentTimes.add(System.currentTimeMillis() - mStartMillis);
+            mCurrentTimes.add(System.nanoTime() - mStartNanos);
         }
 
         @Override
@@ -81,7 +81,11 @@ public class ConverterExecutor {
                 max = Math.max(time, max);
             }
 
-            return String.format(Locale.US, "min=%d, max=%d, avg=%d", min, max, (total - (min + max)) / (times.size() - 2));
+            return String.format(Locale.US, "min=%,3d, max=%,3d, avg=%,3d", toMicros(min), toMicros(max), toMicros((total - (min + max)) / (times.size() - 2)));
+        }
+
+        private long toMicros(long nanos) {
+            return Math.round(nanos / 1000f);
         }
     }
 }

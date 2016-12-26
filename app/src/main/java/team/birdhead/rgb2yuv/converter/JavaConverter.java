@@ -19,13 +19,13 @@ public class JavaConverter implements Converter {
                 final int b = rgb[rgbIndex + 2] & 0xFF;
 
                 final int y = (int) (0.257 * r + 0.504 * g + 0.098 * b + 16);
-                final int u = (int) (0.439 * r - 0.368 * g - 0.071 * b + 128);
-                final int v = (int) (-0.148 * r - 0.291 * g + 0.439 * b + 128);
+                final int u = (int) (-0.148 * r - 0.291 * g + 0.439 * b + 128);
+                final int v = (int) (0.439 * r - 0.368 * g - 0.071 * b + 128);
 
                 yuv[yIndex++] = (byte) Math.max(0, Math.min(255, y));
                 if ((i & 0x01) == 0 && (j & 0x01) == 0) {
-                    yuv[uvIndex++] = (byte) Math.max(0, Math.min(255, u));
                     yuv[uvIndex++] = (byte) Math.max(0, Math.min(255, v));
+                    yuv[uvIndex++] = (byte) Math.max(0, Math.min(255, u));
                 }
 
                 rgbIndex += 4;

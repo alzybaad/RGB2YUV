@@ -22,7 +22,7 @@ public class RsConverter implements Converter {
     }
 
     @Override
-    public void rgbToYuv(byte[] rgb, int width, int height, byte[] nv21) {
+    public void rgbToYuv(byte[] rgb, int width, int height, byte[] yuv) {
         final Type.Builder inType = new Type.Builder(mRenderScript, Element.RGBA_8888(mRenderScript))
                 .setX(width)
                 .setY(height);
@@ -42,6 +42,6 @@ public class RsConverter implements Converter {
         script.set_frameSize(width * height);
         script.forEach_convert(inAllocation);
 
-        outAllocation.copyTo(nv21);
+        outAllocation.copyTo(yuv);
     }
 }
