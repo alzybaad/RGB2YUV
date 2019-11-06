@@ -28,7 +28,7 @@ public class JavaConverter implements Converter {
                     yuv[uvIndex++] = (byte) Math.max(0, Math.min(255, u));
                 }
 
-                rgbIndex += 4;
+                rgbIndex += 3;
             }
         }
     }
